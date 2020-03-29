@@ -1,11 +1,12 @@
-import Discord, { MessageAttachment, Message, VoiceChannel, VoiceConnection } from 'discord.js';
+import Discord, {Message } from 'discord.js';
 import { Env } from './conf/Env';
 import { Logger } from './conf/Logger';
-import ytdl from 'ytdl-core-discord';
+import { PingHandler, FileHandler, YoutubeHandler, SoundHandler } from './handler/';
 
 export class DiscordServer {
 
     client: Discord.Client;
+    prefix: string = '!';
 
     constructor() {
         this.client = new Discord.Client();
@@ -19,40 +20,19 @@ export class DiscordServer {
             Logger.log(`Logged in as ${this.client.user?.tag}!`);
         });
 
+        const pingHandler: PingHandler = new PingHandler();
+        const fileHandler: FileHandler = new FileHandler();
+        const yotubeHandler: YoutubeHandler = new YoutubeHandler();
+        const soundHandler: SoundHandler = new SoundHandler();
+
         this.client.on('message', (msg: Message) => {
-            if (msg.content === 'ping') {
-                msg.reply('pong');
-            }
 
-            Logger.log(`Message: ${msg.content}`);
-
-            if (msg.content === 'pingMult') {
-                msg.channel.send('pong');
-            }
-
-            if (msg.content === 'pingFile') {
-                const attachment = new MessageAttachment('https://dab1nmslvvntp.cloudfront.net/wp-content/uploads/2016/01/1452785857main.png');
-                msg.channel.send(attachment);
-            }
-
-            if (msg.content === 'pingYT') { 
-                const voiceChannel: VoiceChannel = msg.member.voice.channel;
-
-                if (!voiceChannel) {
-                    Logger.log("User is not on a voice channel")
-                    return;
-                }
-
-                voiceChannel.join().then(async (vc: VoiceConnection) => {
-                    const readable = await ytdl('https://www.youtube.com/watch?v=a8c5wmeOL9o');
-                    const dispatcher = vc.play(readable, { type: 'opus', volume: 10 });
-                    //const dispatcher = vc.play('./sound/bless.mp3', { volume: 1 });
-                    dispatcher.on("finish", () => voiceChannel.leave());
-                }).catch(error => {
-                    Logger.error(error);
-                    voiceChannel.leave();
-                });
-            }
+            if (!msg.content.startsWith(this.prefix) || msg.author.bot) return
+            
+            pingHandler.handler(msg);
+            fileHandler.handler(msg);
+            yotubeHandler.handler(msg);
+            soundHandler.handler(msg);
 
         });
     }
