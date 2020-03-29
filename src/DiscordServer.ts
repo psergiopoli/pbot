@@ -55,18 +55,4 @@ export class DiscordServer {
         });
     }
 
-    async soundHandler(msg: Message, handler: (vc: VoiceConnection) => void) {
-        const voiceChannel: VoiceChannel = msg.member.voice.channel;
-
-        if (!voiceChannel) {
-            Logger.log("User is not on a voice channel")
-            return;
-        }
-
-        voiceChannel.join().then(handler).catch(error => {
-            Logger.error(error);
-            voiceChannel.leave();
-        });
-    }
-
 }
