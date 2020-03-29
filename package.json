@@ -1,0 +1,32 @@
+{
+  "name": "pbot",
+  "version": "1.0.0",
+  "description": "A discord bot",
+  "main": "index.js",
+  "scripts": {
+    "debug": "nodemon src/index.ts",
+    "convert": "ts-jest config:migrate ./jest.config.js",
+    "build": "tsc",
+    "lint:list": "eslint */**/*.js --fix",
+    "lint": "eslint */**/*.js --fix",
+    "start": "nodemon src/index.ts"
+  },
+  "author": "ppoli",
+  "license": "ISC",
+  "dependencies": {
+    "@types/node": "^11.10.5",
+    "ts-jest": "^24.0.0",
+    "ts-node": "^8.0.3",
+    "typescript": "^3.3.3333"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^1.4.2",
+    "@typescript-eslint/parser": "^1.4.2",
+    "eslint": "^5.15.1",
+    "eslint-config-prettier": "^4.1.0",
+    "eslint-plugin-prettier": "^3.0.1",
+    "jest": "^24.3.0",
+    "nodemon": "^1.18.10",
+    "prettier": "^1.16.4"
+  }
+}
