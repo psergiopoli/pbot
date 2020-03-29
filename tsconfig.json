@@ -3,11 +3,14 @@
       "module": "commonjs",
       "esModuleInterop": true,
       "target": "es6",
-      "noImplicitAny": true,
+      "noImplicitAny": false,
       "moduleResolution": "node",
       "sourceMap": true,
       "outDir": "dist",
       "baseUrl": ".",
+      "experimentalDecorators": true,
+      "removeComments": true,
+      "declaration": true,
       "paths": {
         "*": [
           "node_modules/*",
@@ -18,8 +21,8 @@
         "index.d.ts",
       ],
       "strict": true,
-      "strictNullChecks": true,
-      "strictFunctionTypes": true,
+      "strictNullChecks": false,
+      "strictFunctionTypes": false,
       // "strictBindCallApply": true,
       "lib": [
         "es6"
