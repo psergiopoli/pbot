@@ -10,7 +10,8 @@
     "lint:list": "eslint */**/*.js --fix",
     "lint": "eslint */**/*.js --fix",
     "start:nodemon": "nodemon src/index.ts",
-    "start": "ts-node src/index.ts"
+    "start": "ts-node src/index.ts",
+    "start:prod": "node dist/index.js"
   },
   "author": "ppoli",
   "license": "ISC",
