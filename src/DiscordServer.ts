@@ -44,9 +44,9 @@ export class DiscordServer {
                 }
 
                 voiceChannel.join().then(async (vc: VoiceConnection) => {
-                    //const readable = await ytdl('https://www.youtube.com/watch?v=a8c5wmeOL9o');
-                    //const dispatcher = vc.play(readable, { type: 'opus', volume: 10 });
-                    const dispatcher = vc.play('./sound/bless.mp3', { volume: 1 });
+                    const readable = await ytdl('https://www.youtube.com/watch?v=a8c5wmeOL9o');
+                    const dispatcher = vc.play(readable, { type: 'opus', volume: 10 });
+                    //const dispatcher = vc.play('./sound/bless.mp3', { volume: 1 });
                     dispatcher.on("finish", () => voiceChannel.leave());
                 }).catch(error => {
                     Logger.error(error);
