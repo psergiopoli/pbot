@@ -8,8 +8,11 @@ import { Readable } from 'stream'
 export class VoiceHandler implements Handler {
 
     async handler(msg: Message) {
-        if (msg.content === '!pingVoice') { 
-            let out = await text2wav("Olá Mundo", {
+        if (msg.content.startsWith('!voice ')) { 
+
+            const message = msg.content.substring(7);
+
+            let out = await text2wav(message, {
                 voice: "pt"
             });
 
