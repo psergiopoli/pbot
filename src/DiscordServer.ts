@@ -1,7 +1,7 @@
 import Discord, {Message } from 'discord.js';
 import { Env } from './conf/Env';
 import { Logger } from './conf/Logger';
-import { PingHandler, FileHandler, YoutubeHandler, SoundHandler, JsonMessageHandler } from './handler/';
+import { PingHandler, FileHandler, YoutubeHandler, SoundHandler, JsonMessageHandler, VoiceHandler } from './handler/';
 
 export class DiscordServer {
 
@@ -25,6 +25,7 @@ export class DiscordServer {
         const yotubeHandler: YoutubeHandler = new YoutubeHandler();
         const soundHandler: SoundHandler = new SoundHandler();
         const jsonMessageHandler: JsonMessageHandler = new JsonMessageHandler();
+        const voiceHandler: VoiceHandler = new VoiceHandler();
 
         this.client.on('message', (msg: Message) => {
 
@@ -35,6 +36,7 @@ export class DiscordServer {
             yotubeHandler.handler(msg);
             soundHandler.handler(msg);
             jsonMessageHandler.handler(msg);
+            voiceHandler.handler(msg);
 
         });
     }

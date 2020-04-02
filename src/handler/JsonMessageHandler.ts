@@ -1,4 +1,4 @@
-import { Handler } from "./BaseHandler";
+import { Handler } from "./Handler";
 import { Message } from "discord.js";
 import * as data from "./../resources/json/messages.json";
 

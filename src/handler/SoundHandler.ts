@@ -1,4 +1,4 @@
-import { Handler } from "./BaseHandler";
+import { Handler } from "./Handler";
 import { Message, VoiceChannel, VoiceConnection } from "discord.js";
 import { Logger } from "../conf/Logger";
 

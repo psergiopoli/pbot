@@ -1,4 +1,4 @@
-import { Handler } from "./BaseHandler";
+import { Handler } from "./Handler";
 import { Message, MessageAttachment } from "discord.js";
 
 export class FileHandler implements Handler {
