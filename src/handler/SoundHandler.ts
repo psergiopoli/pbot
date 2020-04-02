@@ -13,7 +13,7 @@ export class SoundHandler implements Handler {
             }
 
             voiceChannel.join().then(async (vc: VoiceConnection) => {
-                const dispatcher = vc.play('./sound/bless.mp3', { volume: 1 });
+                const dispatcher = vc.play('./sound/bless.wav', { volume: 1 });
                 dispatcher.on("finish", () => voiceChannel.leave());
             }).catch(error => {
                 Logger.error(error);
