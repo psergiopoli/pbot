@@ -20,12 +20,12 @@ export class DiscordServer {
             Logger.log(`Logged in as ${this.client.user?.tag}!`);
         });
 
-        const pingHandler: PingHandler = new PingHandler();
-        const fileHandler: FileHandler = new FileHandler();
-        const yotubeHandler: YoutubeHandler = new YoutubeHandler();
-        const soundHandler: SoundHandler = new SoundHandler();
-        const jsonMessageHandler: JsonMessageHandler = new JsonMessageHandler();
-        const voiceHandler: VoiceHandler = new VoiceHandler();
+        const pingHandler: PingHandler = new PingHandler("!ping");
+        const fileHandler: FileHandler = new FileHandler("!file");
+        const yotubeHandler: YoutubeHandler = new YoutubeHandler("!yt");
+        const soundHandler: SoundHandler = new SoundHandler("!sd");
+        const jsonMessageHandler: JsonMessageHandler = new JsonMessageHandler("!msg");
+        const voiceHandler: VoiceHandler = new VoiceHandler("!voice");
 
         this.client.on('message', (msg: Message) => {
 
