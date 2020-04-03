@@ -27,7 +27,7 @@ export class DiscordServer {
         const jsonMessageHandler: JsonMessageHandler = new JsonMessageHandler("!msg");
         const voiceHandler: VoiceHandler = new VoiceHandler("!voice");
 
-        this.client.on('message', (msg: Message) => {
+        this.client.on('message', (msg: Message) => {    
 
             if (!msg.content.startsWith(this.prefix) || msg.author.bot) return
             

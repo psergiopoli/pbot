@@ -17,7 +17,10 @@ export class VoiceHandler extends Handler {
         const message = msg.content.substring(7);
 
         let out = await text2wav(message, {
-            voice: "pt"
+            voice: "pt",
+            wordGap: 50,
+            pitch: 80,
+            speed: 125
         });
 
         const voiceChannel: VoiceChannel = msg.member.voice.channel;

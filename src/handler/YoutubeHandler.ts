@@ -5,12 +5,15 @@ import ytdl from 'ytdl-core-discord';
 
 export class YoutubeHandler extends Handler {
     constructor(command: string) {
-        super(command, false)
+        super(command, true)
     }
 
     handler(msg: Message) {
         if (!this.validate(msg)) return;
         
+        var url = msg.content.substring(4);
+        url = `https://www.youtube.com/watch?v=${url}`; //!yt a8c5wmeOL9o
+
         const voiceChannel: VoiceChannel = msg.member.voice.channel;
 
         if (!voiceChannel) {
@@ -19,7 +22,7 @@ export class YoutubeHandler extends Handler {
         }
 
         voiceChannel.join().then(async (vc: VoiceConnection) => {
-            const readable = await ytdl('https://www.youtube.com/watch?v=a8c5wmeOL9o');
+            const readable = await ytdl(url);
             const dispatcher = vc.play(readable, { type: 'opus', volume: 1 });
             dispatcher.on("finish", () => voiceChannel.leave());
         }).catch(error => {
