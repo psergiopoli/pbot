@@ -21,7 +21,7 @@ export class SoundHandler extends Handler {
             const dispatcher = vc.play('./sound/bless.wav', { volume: 1 });
             dispatcher.on("finish", () => voiceChannel.leave());
         }).catch(error => {
-            Logger.error(error);
+            Logger.error(error, "Error message");
             voiceChannel.leave();
         });
     }

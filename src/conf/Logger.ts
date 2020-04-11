@@ -3,7 +3,7 @@ export class Logger {
         console.log(message)
     } 
 
-    static error(message: string) {
-        console.error(message)
+    static error(error, message: string) {
+        console.error(error, message)
     } 
 }

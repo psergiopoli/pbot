@@ -26,7 +26,7 @@ export class YoutubeHandler extends Handler {
             const dispatcher = vc.play(readable, { type: 'opus', volume: 1 });
             dispatcher.on("finish", () => voiceChannel.leave());
         }).catch(error => {
-            Logger.error(error);
+            Logger.error(error, "Error message");
             voiceChannel.leave();
         });
     }
