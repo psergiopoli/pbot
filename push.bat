@@ -1,2 +1,3 @@
-docker tag <imageId> psergiopoli/pbot
-docker push psergiopoli/pbot:0.1
+docker build . --tag pbot-0.3
+docker tag fe725e7fc68a psergiopoli/pbot:0.3
+docker push psergiopoli/pbot:0.3
