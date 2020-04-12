@@ -39,5 +39,16 @@ export class VoiceHandler extends Handler {
             voiceChannel.leave();
         });
     }
-        
+
+    async sendVoice(msg: String, channel: VoiceChannel) {
+
+        if (!this.validate(msg)) return;
+
+        const voiceChannel: VoiceChannel = channel;
+
+        const url = await googleTTS(msg, 'pt-br', 1);
+        let response = await fetch(url);
+        this.sendAudioStream(voiceChannel, await response.buffer());
+
+    }
 }
