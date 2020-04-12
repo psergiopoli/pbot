@@ -27,6 +27,23 @@ export class DiscordServer {
         const jsonMessageHandler: JsonMessageHandler = new JsonMessageHandler("!msg");
         const voiceHandler: VoiceHandler = new VoiceHandler("!voice");
 
+        this.client.on('voiceStateUpdate', (msg: Message, oldMember, newMember) => {
+            let newUserChannel = newMember.voiceChannel
+            let oldUserChannel = oldMember.voiceChannel
+            let clientChannel = msg.member.voice.channel
+          
+          
+            if(oldUserChannel === undefined && newUserChannel !== undefined) {
+          
+                voiceHandler.sendVoice("Bem vindo corno !! Auu Auu", clientChannel)
+          
+            } else if(newUserChannel === undefined){
+          
+              voiceHandler.sendVoice("Vai tarde corno, já não te suportava aqui falando mentira.", clientChannel)
+          
+            }
+        });
+
         this.client.on('message', (msg: Message) => {    
 
             if (!msg.content.startsWith(this.prefix) || msg.author.bot) return
@@ -39,6 +56,7 @@ export class DiscordServer {
             voiceHandler.handler(msg);
 
         });
+        
     }
 
 }
