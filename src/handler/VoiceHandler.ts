@@ -16,19 +16,16 @@ export class VoiceHandler extends Handler {
         if (!this.validate(msg)) return;
 
         const voiceChannel: VoiceChannel = msg.member.voice.channel;
-
         const message = msg.content.substring(7);
-
-        const url = await googleTTS(message, 'pt-br', 1);
-        let response = await fetch(url);
-        this.sendAudioStream(voiceChannel, await response.buffer());
-
+        this.convertAndSend(message, voiceChannel);
     }
 
-    async sendAudioStream(voiceChannel, binaryStream) {
+    async convertAndSend(msg: String, voiceChannel: VoiceChannel) {
+        const url = await googleTTS(msg, 'pt-br', 1);
+        let response = await fetch(url);
         const readable = new Readable()
         readable._read = () => {}
-        readable.push(binaryStream)
+        readable.push(await response.buffer())
         readable.push(null)
 
         voiceChannel.join().then(async (vc: VoiceConnection) => {
@@ -41,14 +38,6 @@ export class VoiceHandler extends Handler {
     }
 
     async sendVoice(msg: String, channel: VoiceChannel) {
-
-        if (!this.validate(msg)) return;
-
-        const voiceChannel: VoiceChannel = channel;
-
-        const url = await googleTTS(msg, 'pt-br', 1);
-        let response = await fetch(url);
-        this.sendAudioStream(voiceChannel, await response.buffer());
-
+        this.convertAndSend(msg, channel);
     }
 }

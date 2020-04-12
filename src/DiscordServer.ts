@@ -1,9 +1,11 @@
-import Discord, {Message } from 'discord.js';
+import Discord, {Message, VoiceState, VoiceChannel } from 'discord.js';
 import { Env } from './conf/Env';
 import { Logger } from './conf/Logger';
 import { PingHandler, FileHandler, YoutubeHandler, SoundHandler, JsonMessageHandler, VoiceHandler } from './handler/';
 
 export class DiscordServer {
+
+    // TODO query for sending audio and message to avoid various problems...
 
     client: Discord.Client;
     prefix: string = '!';
@@ -27,20 +29,16 @@ export class DiscordServer {
         const jsonMessageHandler: JsonMessageHandler = new JsonMessageHandler("!msg");
         const voiceHandler: VoiceHandler = new VoiceHandler("!voice");
 
-        this.client.on('voiceStateUpdate', (msg: Message, oldMember, newMember) => {
-            let newUserChannel = newMember.voiceChannel
-            let oldUserChannel = oldMember.voiceChannel
-            let clientChannel = msg.member.voice.channel
+        this.client.on('voiceStateUpdate', (oldMember: VoiceState, newMember: VoiceState) => {
+            if (oldMember.member.id === this.client.user.id) return; // avoid bot self message in a infint loop
+
+            let newUserChannel: VoiceChannel = newMember.channel
+            let oldUserChannel: VoiceChannel = oldMember.channel
           
-          
-            if(oldUserChannel === undefined && newUserChannel !== undefined) {
-          
-                voiceHandler.sendVoice("Bem vindo corno !! Auu Auu", clientChannel)
-          
-            } else if(newUserChannel === undefined){
-          
-              voiceHandler.sendVoice("Vai tarde corno, já não te suportava aqui falando mentira.", clientChannel)
-          
+            if(oldUserChannel === null && newUserChannel !== null) {
+                voiceHandler.convertAndSend("Bem vindo corno !! Auu Auu", newUserChannel)
+            } else if(newUserChannel === null){
+                voiceHandler.convertAndSend("Vai tarde corno, já não te suportava aqui falando mentira.", oldUserChannel)
             }
         });
 
