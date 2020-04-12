@@ -1,3 +1,3 @@
-docker build . --tag pbot-0.3
-docker tag fe725e7fc68a psergiopoli/pbot:0.3
-docker push psergiopoli/pbot:0.3
+docker build . --tag pbot-0.4
+docker tag e1daff2c8d98 psergiopoli/pbot:0.4
+docker push psergiopoli/pbot:0.4
