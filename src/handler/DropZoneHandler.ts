@@ -53,9 +53,15 @@ export class DropZoneHandler extends Handler {
         array.sort(() => Math.random() - 0.5);
 
         const messages = [`Se não cair em ${array[0]} é corno.`,
-         `O ultimo a cair em ${array[0]} vai chupar o saco do p poli.`,
-         `Segue a call e cai em ${array[0]} se não você vai trabalhar com o 08.`,
-         `Sim, vamos cair em ${array[0]}, la a probabilidade de vitória é alta` ];
+		`O Guinão não está jogando porque está sendo refém na ${array[0]} , salvem ele.`,
+		`Se o Filipe autista estivesse aqui, ele falaria para caírem em ${array[0]}.`,
+        `O ultimo a cair em ${array[0]} vai chupar o saco do p poli.`,
+        `Se não quiser ter bolinha no pau, caia em ${array[0]}.`,
+        `Segue a call e cai em ${array[0]} se não você vai trabalhar com o 08.`,
+        `Vilmão, o diabo vermelho, está louca por sexo e te aguarda em ${array[0]} .`,
+        `Nessa rodada, não sigam as calls do corno do Mendes, caiam em  ${array[0]}.`,
+        `Bolzan resolveu comprar o ${array[0]} , vá checar o terreno.`,
+        `Sim, vamos cair em ${array[0]}, la a probabilidade de vitória é alta` ];
 
         messages.sort(() => Math.random() - 0.5); 
         return messages[0]
