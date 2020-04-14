@@ -1,7 +1,7 @@
 import Discord, {Message, VoiceState, VoiceChannel } from 'discord.js';
 import { Env } from './conf/Env';
 import { Logger } from './conf/Logger';
-import { PingHandler, FileHandler, YoutubeHandler, SoundHandler, JsonMessageHandler, VoiceHandler } from './handler/';
+import { PingHandler, FileHandler, YoutubeHandler, SoundHandler, JsonMessageHandler, VoiceHandler, DropZoneHandler } from './handler/';
 
 export class DiscordServer {
 
@@ -28,19 +28,7 @@ export class DiscordServer {
         const soundHandler: SoundHandler = new SoundHandler("!sd");
         const jsonMessageHandler: JsonMessageHandler = new JsonMessageHandler("!msg");
         const voiceHandler: VoiceHandler = new VoiceHandler("!voice");
-
-        this.client.on('voiceStateUpdate', (oldMember: VoiceState, newMember: VoiceState) => {
-            if (oldMember.member.id === this.client.user.id) return; // avoid bot self message in a infint loop
-
-            let newUserChannel: VoiceChannel = newMember.channel
-            let oldUserChannel: VoiceChannel = oldMember.channel
-          
-            if(oldUserChannel === null && newUserChannel !== null) {
-                voiceHandler.convertAndSend("Bem vindo corno !! Auu Auu", newUserChannel)
-            } else if(newUserChannel === null){
-                voiceHandler.convertAndSend("Vai tarde corno, já não te suportava aqui falando mentira.", oldUserChannel)
-            }
-        });
+        const voiceDropZoneHandler: DropZoneHandler = new DropZoneHandler("!zone");
 
         this.client.on('message', (msg: Message) => {    
 
@@ -52,6 +40,7 @@ export class DiscordServer {
             soundHandler.handler(msg);
             jsonMessageHandler.handler(msg);
             voiceHandler.handler(msg);
+            voiceDropZoneHandler.handler(msg);
 
         });
         
