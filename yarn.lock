@@ -3794,7 +3794,7 @@ request-promise-native@^1.0.5:
     stealthy-require "^1.1.1"
     tough-cookie "^2.3.3"
 
-request@^2.81.0, request@^2.87.0:
+request@^2.87.0:
   version "2.88.2"
   resolved "https://registry.yarnpkg.com/request/-/request-2.88.2.tgz#d73c918731cb5a87da047e207234146f664d12b3"
   integrity sha512-MsvtOrfG9ZcrOwAW+Qi+F6HbD0CWXEh9ou77uOb7FM2WPhwT7smM833PzanhJLsgXjN89Ir6V2PczXNnMpwKhw==
@@ -4326,23 +4326,6 @@ text-table@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/text-table/-/text-table-0.2.0.tgz#7f5ee823ae805207c00af2df4a84ec3fcfa570b4"
   integrity sha1-f17oI66AUgfACvLfSoTsP8+lcLQ=
-
-text-to-mp3@^1.0.4:
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/text-to-mp3/-/text-to-mp3-1.0.4.tgz#581dc99de72d7da9e648e8a5f81e02c5bfe7622e"
-  integrity sha1-WB3JnectfanmSOil+B4Cxb/nYi4=
-  dependencies:
-    request "^2.81.0"
-
-text-to-speech-js@^1.1.9:
-  version "1.1.9"
-  resolved "https://registry.yarnpkg.com/text-to-speech-js/-/text-to-speech-js-1.1.9.tgz#a55a675d485fb4c8a46b96aa64c71b58d1733e21"
-  integrity sha512-18bci54WpIbjmN/2JVNlZ99DHpLw64iBX6LNJcfuK8got5gnfR5nPicgZAp1xUM4VT8Dh+RnLiIkBceLP4oOew==
-
-text2wav@^0.0.13:
-  version "0.0.13"
-  resolved "https://registry.yarnpkg.com/text2wav/-/text2wav-0.0.13.tgz#6f6c24d985eb296dd09d183cb6aca0c6ab3e2a44"
-  integrity sha512-YmMUcozZi3sZEhOy5rS9q+U1u2iwlc2e/MbjEflVSeY8KsioE0OlbuzN8aMpY0867HQ5xBv+9AYA1nNm6nqaNQ==
 
 throat@^4.0.0:
   version "4.1.0"
