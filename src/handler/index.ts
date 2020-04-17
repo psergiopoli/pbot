@@ -5,3 +5,4 @@ export * from './YoutubeHandler';
 export * from './JsonMessageHandler';
 export * from './VoiceHandler';
 export * from './DropZoneHandler';
+export * from './ChatCleanerHandler';
