@@ -52,15 +52,18 @@ export class DropZoneHandler extends Handler {
     private shuffle(array: any) {
         array.sort(() => Math.random() - 0.5);
 
+        let str1 = Buffer.from("VmlsbcOjbw==", 'base64').toString('utf-8')
+        let str2 = Buffer.from("Qm9semFu", 'base64').toString('utf-8')
+
         const messages = [`Se não cair em ${array[0]} é corno.`,
 		`O Guinão não está jogando porque está sendo refém na ${array[0]} , salvem ele.`,
 		`Se o Filipe autista estivesse aqui, ele falaria para caírem em ${array[0]}.`,
         `O ultimo a cair em ${array[0]} vai chupar o saco do p poli.`,
         `Se não quiser ter bolinha no pau, caia em ${array[0]}.`,
         `Segue a call e cai em ${array[0]} se não você vai trabalhar com o 08.`,
-        `Vilmão, o diabo vermelho, está louca por sexo e te aguarda em ${array[0]} .`,
+        `${str1}, o diabo vermelho, está louca por sexo e te aguarda em ${array[0]} .`,
         `Nessa rodada, não sigam as calls do corno do Mendes, caiam em  ${array[0]}.`,
-        `Bolzan resolveu comprar o ${array[0]} , vá checar o terreno.`,
+        `${str2} resolveu comprar o ${array[0]} , vá checar o terreno.`,
         `Sim, vamos cair em ${array[0]}, la a probabilidade de vitória é alta` ];
 
         messages.sort(() => Math.random() - 0.5); 
