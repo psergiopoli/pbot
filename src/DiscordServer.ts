@@ -1,7 +1,8 @@
 import Discord, {Message, VoiceState, VoiceChannel } from 'discord.js';
 import { Env } from './conf/Env';
 import { Logger } from './conf/Logger';
-import { PingHandler, FileHandler, YoutubeHandler, SoundHandler, JsonMessageHandler, VoiceHandler, DropZoneHandler } from './handler/';
+import { PingHandler, FileHandler, YoutubeHandler, SoundHandler, JsonMessageHandler, VoiceHandler, DropZoneHandler,
+         ChatCleanerHandler } from './handler/';
 
 export class DiscordServer {
 
@@ -29,6 +30,7 @@ export class DiscordServer {
         const jsonMessageHandler: JsonMessageHandler = new JsonMessageHandler("!msg");
         const voiceHandler: VoiceHandler = new VoiceHandler("!voice");
         const voiceDropZoneHandler: DropZoneHandler = new DropZoneHandler("!zone");
+        const chatCleanerHandler: ChatCleanerHandler = new ChatCleanerHandler("!clean");
 
         this.client.on('message', (msg: Message) => {    
 
@@ -41,6 +43,7 @@ export class DiscordServer {
             jsonMessageHandler.handler(msg);
             voiceHandler.handler(msg);
             voiceDropZoneHandler.handler(msg);
+            chatCleanerHandler.handler(msg);
 
         });
         
