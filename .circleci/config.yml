@@ -19,10 +19,7 @@ jobs:
    
   
 workflows:
-    build:
-      jobs:
-        - install-and-build
-    build:
+    standard-flow:
         jobs:
         - install-and-build
         - build-docker:
