@@ -14,10 +14,8 @@ jobs:
           node-version: 12.16.2
       - run: node --version
       - run: echo $CHAVE
-      - run: 
-        command: echo $GIT_XISDE
-        environment:
-          GIT_XISDE: git rev-parse --short HEAD
+      - run: echo 'export COMMIT_TAG=$(git rev-parse --short HEAD)' >> "$BASH_ENV"
+      - run: echo $COMMIT_TAG
 
   docker-build:
     docker:
