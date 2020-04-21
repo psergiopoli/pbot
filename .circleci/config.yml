@@ -2,16 +2,31 @@ version: 2.1
 orbs:
   node: circleci/node@1.1.6
 jobs:
-  build-and-test:
+  install-and-build:
     executor:
-      name: node/default
+      name: node/12.16.2
     steps:
       - checkout
       - node/with-cache:
           steps:
             - run: yarn install
             - run: yarn build
+  docker-build:
+    executor:
+      name: node/12.16.2
+    steps:
+      - docker build .
+   
+  
 workflows:
-    build-and-test:
+    build:
       jobs:
-        - build-and-test
+        - install-and-build
+    build:
+        jobs:
+        - install-and-build
+        - build-docker:
+            requires:
+              - install-and-build
+            branches:
+              only: circleci-setup
