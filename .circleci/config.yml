@@ -20,15 +20,20 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker
-      - run: echo 'export COMMIT_TAG=$(git rev-parse --short HEAD)' >> "$BASH_ENV"
+      - run: 
+          name: Export git commit hash as env variable
+          command: echo 'export COMMIT_TAG=$(git rev-parse --short HEAD)' >> "$BASH_ENV"
       - run:
-          name: build docker image
+          name: Print git commit
+          command: echo $COMMIT_TAG
+      - run:
+          name: Build docker image
           command: docker build . -t psergiopoli/pbot:$COMMIT_TAG
       - run:
-          name: docker login
+          name: Docker login
           command: docker login --username=psergiopoli --password=$DOCKER_PASSWORD
       - run:
-          name: docker push
+          name: Docker push
           command: docker push psergiopoli/pbot:$COMMIT_TAG
    
 workflows:
