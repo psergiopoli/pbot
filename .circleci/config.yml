@@ -22,7 +22,7 @@ workflows:
     standard-flow:
         jobs:
         - install-and-build
-        - build-docker:
+        - docker-build:
             requires:
               - install-and-build
             branches:
