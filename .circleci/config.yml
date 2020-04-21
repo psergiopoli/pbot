@@ -13,9 +13,6 @@ jobs:
           install-yarn: true
           node-version: 12.16.2
       - run: node --version
-      - run: echo $CHAVE
-      - run: echo 'export COMMIT_TAG=$(git rev-parse --short HEAD)' >> "$BASH_ENV"
-      - run: echo $COMMIT_TAG
 
   docker-build:
     docker:
@@ -23,9 +20,16 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker
+      - run: echo 'export COMMIT_TAG=$(git rev-parse --short HEAD)' >> "$BASH_ENV"
       - run:
           name: build docker image
-          command: docker build .
+          command: docker build . -t psergiopoli/pbot:$COMMIT_TAG
+      - run:
+          name: docker login
+          command: docker login --username=psergiopoli --password=$DOCKER_PASSWORD
+      - run:
+          name: docker push
+          command: docker push psergiopoli/pbot:$COMMIT_TAG
    
 workflows:
     standard-flow:
