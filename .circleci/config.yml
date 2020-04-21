@@ -25,5 +25,6 @@ workflows:
         - docker-build:
             requires:
               - install-and-build
-            branches:
-              only: circleci-setup
+            filters:
+              branches:
+                only: circleci-setup
