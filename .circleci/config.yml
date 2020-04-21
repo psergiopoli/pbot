@@ -16,25 +16,22 @@ jobs:
 
   docker-build:
     docker:
-      - image: docker:17.05.0-ce-git
+      - image: docker:18.06.0-ce-git
     steps:
       - checkout
       - setup_remote_docker
-      - run: 
-          name: Export git commit hash as env variable
-          command: echo 'export COMMIT_TAG=$(git rev-parse --short HEAD)' >> "$BASH_ENV"
       - run:
           name: Print git commit
           command: echo $COMMIT_TAG
       - run:
           name: Build docker image
-          command: docker build . -t psergiopoli/pbot:$COMMIT_TAG
+          command: docker build . -t psergiopoli/pbot:$(echo $CIRCLE_SHA1 | cut -c -7)
       - run:
           name: Docker login
           command: docker login --username=psergiopoli --password=$DOCKER_PASSWORD
       - run:
           name: Docker push
-          command: docker push psergiopoli/pbot:$COMMIT_TAG
+          command: docker push psergiopoli/pbot:$(echo $CIRCLE_SHA1 | cut -c -7)
    
 workflows:
     standard-flow:
