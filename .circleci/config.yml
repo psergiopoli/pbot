@@ -22,7 +22,7 @@ jobs:
       - setup_remote_docker
       - run:
           name: Print git commit
-          command: echo $COMMIT_TAG
+          command: echo $(echo $CIRCLE_SHA1 | cut -c -7)
       - run:
           name: Build docker image
           command: docker build . -t psergiopoli/pbot:$(echo $CIRCLE_SHA1 | cut -c -7)
