@@ -4,7 +4,7 @@ orbs:
 jobs:
   install-and-build:
     executor:
-      name: node/12
+      name: node/default
     steps:
       - checkout
       - node/with-cache:
@@ -13,7 +13,7 @@ jobs:
             - run: yarn build
   docker-build:
     executor:
-      name: node/12
+      name: node/default
     steps:
       - docker build .
    
