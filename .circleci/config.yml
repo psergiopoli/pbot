@@ -4,6 +4,8 @@ orbs:
 
 jobs:
   install-and-build:
+    environment:
+      SHORT_GIT_HASH: $(echo $CIRCLE_SHA1 | cut -c -7)
     executor:
       name: node/default
       tag: '12.16.2'
@@ -13,6 +15,7 @@ jobs:
           install-yarn: true
           node-version: 12.16.2
       - run: node --version
+      - run: echo $SHORT_GIT_HASH
 
   docker-build:
     docker:
@@ -28,9 +31,3 @@ workflows:
     standard-flow:
         jobs:
         - install-and-build
-        - docker-build:
-            requires:
-              - install-and-build
-            filters:
-              branches:
-                only: circleci-setup
