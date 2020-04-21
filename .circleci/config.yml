@@ -1,23 +1,29 @@
 version: 2.1
 orbs:
-  node: circleci/node@1.1.6
+  node: circleci/node@2.0.2
+
 jobs:
   install-and-build:
     executor:
       name: node/default
+      tag: '12.16.2'
     steps:
       - checkout
-      - node/with-cache:
-          steps:
-            - run: yarn install
-            - run: yarn build
+      - node/install:
+          install-yarn: true
+          node-version: 12.16.2
+      - run: node --version
+
   docker-build:
-    executor:
-      name: node/default
+    docker:
+      - image: docker:17.05.0-ce-git
     steps:
-      - docker build .
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: build docker image
+          command: docker build .
    
-  
 workflows:
     standard-flow:
         jobs:
