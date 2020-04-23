@@ -36,6 +36,19 @@ export class DiscordServer {
         // const instagramHandler: InstagramHandler = new InstagramHandler("!insta");
         const googleImagesHandler: GoogleImageHandler = new GoogleImageHandler("!img");
 
+        this.client.on('voiceStateUpdate', (oldMember: VoiceState, newMember: VoiceState) => {	
+            if (oldMember.member.id === this.client.user.id) return; // avoid bot self message in a infint loop	
+
+            let newUserChannel: VoiceChannel = newMember.channel	
+            let oldUserChannel: VoiceChannel = oldMember.channel	
+
+            if(oldUserChannel === null && newUserChannel !== null) {	
+                voiceHandler.convertAndSend(`${newMember.member.user.username} entrou`, newUserChannel)	
+            } else if(newUserChannel === null){	
+                voiceHandler.convertAndSend(`${newMember.member.user.username} saiu`, oldUserChannel)	
+            }	
+        });
+
         this.client.on('message', (msg: Message) => {    
             if (!msg.content.startsWith(this.prefix) || msg.author.bot) return
             
