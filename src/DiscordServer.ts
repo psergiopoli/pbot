@@ -2,7 +2,9 @@ import Discord, {Message, VoiceState, VoiceChannel } from 'discord.js';
 import { Env } from './conf/Env';
 import { Logger } from './conf/Logger';
 import { PingHandler, FileHandler, YoutubeHandler, SoundHandler, JsonMessageHandler, VoiceHandler, DropZoneHandler,
-         ChatCleanerHandler } from './handler/';
+         ChatCleanerHandler, 
+         InstagramHandler,
+         GoogleImageHandler} from './handler/';
 
 export class DiscordServer {
 
@@ -31,9 +33,10 @@ export class DiscordServer {
         const voiceHandler: VoiceHandler = new VoiceHandler("!voice");
         const voiceDropZoneHandler: DropZoneHandler = new DropZoneHandler("!zone");
         const chatCleanerHandler: ChatCleanerHandler = new ChatCleanerHandler("!clean");
+        // const instagramHandler: InstagramHandler = new InstagramHandler("!insta");
+        const googleImagesHandler: GoogleImageHandler = new GoogleImageHandler("!img");
 
         this.client.on('message', (msg: Message) => {    
-
             if (!msg.content.startsWith(this.prefix) || msg.author.bot) return
             
             pingHandler.handler(msg);
@@ -44,6 +47,8 @@ export class DiscordServer {
             voiceHandler.handler(msg);
             voiceDropZoneHandler.handler(msg);
             chatCleanerHandler.handler(msg);
+            // instagramHandler.handler(msg);
+            googleImagesHandler.handler(msg);
 
         });
         
