@@ -7,4 +7,4 @@ export * from './VoiceHandler';
 export * from './DropZoneHandler';
 export * from './ChatCleanerHandler';
 export * from './IntagramHandler';
-export * from './GoogleImageHandler';
+export * from './ImageSearchHandler';

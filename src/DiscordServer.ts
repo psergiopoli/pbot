@@ -2,9 +2,8 @@ import Discord, {Message, VoiceState, VoiceChannel } from 'discord.js';
 import { Env } from './conf/Env';
 import { Logger } from './conf/Logger';
 import { PingHandler, FileHandler, YoutubeHandler, SoundHandler, JsonMessageHandler, VoiceHandler, DropZoneHandler,
-         ChatCleanerHandler, 
-         InstagramHandler,
-         GoogleImageHandler} from './handler/';
+         ChatCleanerHandler,
+         ImageSearchHandler} from './handler/';
 
 export class DiscordServer {
 
@@ -33,8 +32,7 @@ export class DiscordServer {
         const voiceHandler: VoiceHandler = new VoiceHandler("!voice");
         const voiceDropZoneHandler: DropZoneHandler = new DropZoneHandler("!zone");
         const chatCleanerHandler: ChatCleanerHandler = new ChatCleanerHandler("!clean");
-        // const instagramHandler: InstagramHandler = new InstagramHandler("!insta");
-        const googleImagesHandler: GoogleImageHandler = new GoogleImageHandler("!img");
+        const imageSearchHandler: ImageSearchHandler = new ImageSearchHandler("!img");
 
         this.client.on('voiceStateUpdate', (oldMember: VoiceState, newMember: VoiceState) => {	
             if (oldMember.member.id === this.client.user.id) return; // avoid bot self message in a infint loop	
@@ -60,8 +58,7 @@ export class DiscordServer {
             voiceHandler.handler(msg);
             voiceDropZoneHandler.handler(msg);
             chatCleanerHandler.handler(msg);
-            // instagramHandler.handler(msg);
-            googleImagesHandler.handler(msg);
+            imageSearchHandler.handler(msg);
 
         });
         

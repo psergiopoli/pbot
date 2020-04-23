@@ -1,17 +1,19 @@
 import { Handler } from "./Handler";
 import { Message } from "discord.js";
-import { google, customsearch_v1 } from 'googleapis';
-import { Env } from "../conf/Env";
 import { Logger } from "../conf/Logger";
+import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
 
+export class ImageSearchHandler extends Handler {
 
-export class GoogleImageHandler extends Handler {
+    private NUMBER_OF_RESULTS = 5;
 
-    private NUMBER_OF_RESULTS = 2;
+    private axiosConfig = {
+        baseURL: 'https://api.qwant.com/api/',
+        timeout: 5000,
+        headers: {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36'}
+    };
 
-    private searchEngine: customsearch_v1.Customsearch;
-    private googleKey: string;
-    private googleCSE: string;
+    private api: AxiosInstance;
 
     private successMessages: string[] = [
         'Parece que você teve sorte hoje pequena lula marinha!!',
@@ -28,13 +30,7 @@ export class GoogleImageHandler extends Handler {
 
     constructor(command: string) {
         super(command, false)
-        
-        this.googleKey = Env.googleKey();
-        this.googleCSE = Env.googleCSE();
-
-        this.searchEngine = google.customsearch({
-            version: "v1"
-        });
+        this.api = axios.create(this.axiosConfig);
     }
 
     async handler(msg: Message) {
@@ -42,28 +38,33 @@ export class GoogleImageHandler extends Handler {
 
         const search = msg.content.substring(5);
 
-        const params = {
-            auth: this.googleKey,
-            cx: this.googleCSE,
-            q: search,
-            searchType: 'image',
-            imgSize: 'medium', //icon, small, medium, large, xlarge, xxlarge, and huge. 
-            num: this.NUMBER_OF_RESULTS
-        };
-
         try {
-            const response = await this.searchEngine.cse.list(params);
-            const image = this.shuffleAndPick(response.data.items);
-            console.log(image.link);
+            
+            const mediaUrl = await this.getImage(search);
 
             msg.channel.send(this.shuffleAndPick(this.successMessages), {
-                files: [image.link]
+                files: [mediaUrl]
             });
         } catch(err) {
             Logger.error(err, "Error on google search");
             msg.channel.send(`Deu algum xabu :warning: :warning: :warning:, chama o ADM!!!!`);
         }
 
+    }
+
+    private async getImage(search: String) {
+        const response = await this.api.get("/search/images", {
+            params: {
+                'count': this.NUMBER_OF_RESULTS,
+                'q': search,
+                't': 'images',
+                'safesearch': 0,
+                'locale': 'pt_BR',
+                'uiv': 4
+            }
+        });
+
+        return this.shuffleAndPick(response.data.data.result.items).media;
     }
 
     private shuffleAndPick(array) {
