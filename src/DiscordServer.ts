@@ -2,7 +2,8 @@ import Discord, {Message, VoiceState, VoiceChannel } from 'discord.js';
 import { Env } from './conf/Env';
 import { Logger } from './conf/Logger';
 import { PingHandler, FileHandler, YoutubeHandler, SoundHandler, JsonMessageHandler, VoiceHandler, DropZoneHandler,
-         ChatCleanerHandler } from './handler/';
+         ChatCleanerHandler,
+         ImageSearchHandler} from './handler/';
 
 export class DiscordServer {
 
@@ -31,9 +32,22 @@ export class DiscordServer {
         const voiceHandler: VoiceHandler = new VoiceHandler("!voice");
         const voiceDropZoneHandler: DropZoneHandler = new DropZoneHandler("!zone");
         const chatCleanerHandler: ChatCleanerHandler = new ChatCleanerHandler("!clean");
+        const imageSearchHandler: ImageSearchHandler = new ImageSearchHandler("!img");
+
+        this.client.on('voiceStateUpdate', (oldMember: VoiceState, newMember: VoiceState) => {	
+            if (oldMember.member.id === this.client.user.id) return; // avoid bot self message in a infint loop	
+
+            let newUserChannel: VoiceChannel = newMember.channel	
+            let oldUserChannel: VoiceChannel = oldMember.channel	
+
+            if(oldUserChannel === null && newUserChannel !== null) {	
+                voiceHandler.convertAndSend(`${newMember.member.user.username} entrou`, newUserChannel)	
+            } else if(newUserChannel === null){	
+                voiceHandler.convertAndSend(`${newMember.member.user.username} saiu`, oldUserChannel)	
+            }	
+        });
 
         this.client.on('message', (msg: Message) => {    
-
             if (!msg.content.startsWith(this.prefix) || msg.author.bot) return
             
             pingHandler.handler(msg);
@@ -44,6 +58,7 @@ export class DiscordServer {
             voiceHandler.handler(msg);
             voiceDropZoneHandler.handler(msg);
             chatCleanerHandler.handler(msg);
+            imageSearchHandler.handler(msg);
 
         });
         

@@ -6,3 +6,5 @@ export * from './JsonMessageHandler';
 export * from './VoiceHandler';
 export * from './DropZoneHandler';
 export * from './ChatCleanerHandler';
+export * from './IntagramHandler';
+export * from './ImageSearchHandler';

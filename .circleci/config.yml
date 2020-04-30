@@ -1,0 +1,45 @@
+version: 2.1
+orbs:
+  node: circleci/node@2.0.2
+
+jobs:
+  install-and-build:
+    executor:
+      name: node/default
+      tag: '12.16.2'
+    steps:
+      - checkout
+      - node/install:
+          install-yarn: true
+          node-version: 12.16.2
+      - run: node --version
+
+  docker-build-and-push:
+    docker:
+      - image: docker:18.06.0-ce-git
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: Print git commit
+          command: echo $(echo $CIRCLE_SHA1 | cut -c -7)
+      - run:
+          name: Build docker image
+          command: docker build . -t psergiopoli/pbot:$(echo $CIRCLE_SHA1 | cut -c -7)
+      - run:
+          name: Docker login
+          command: docker login --username=psergiopoli --password=$DOCKER_PASSWORD
+      - run:
+          name: Docker push
+          command: docker push psergiopoli/pbot:$(echo $CIRCLE_SHA1 | cut -c -7)
+   
+workflows:
+    standard-flow:
+        jobs:
+        - install-and-build
+        - docker-build-and-push:
+            requires:
+              - install-and-build
+            filters:
+              branches:
+                only: master
