@@ -8,3 +8,4 @@ export * from './DropZoneHandler';
 export * from './ChatCleanerHandler';
 export * from './IntagramHandler';
 export * from './ImageSearchHandler';
+export * from './GenericVoiceHandler';
